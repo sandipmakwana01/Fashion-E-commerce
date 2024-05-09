@@ -1,0 +1,244 @@
+{% extends "base.html" %} {% block title %} E Commerce {% endblock title %} 
+{% block body %}
+
+<!-- {% if message %}
+<div id="popup-container">
+  <div id="popup-box">
+    <span id="close">&times;</span>
+    <p id="message">{{ message }}</p>
+  </div>
+</div>
+{% endif %} -->
+
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name">Cart</h1>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">cart</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page-wrapper">
+  <div class="cart shopping">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <div class="block">
+            <div class="product-list">
+              <form method="post">
+                {% if cart_product %}
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="" style="text-align: center">Item Name</th>
+                        <th class="" style="text-align: center">Item Price</th>
+                        <th class="" style="text-align: center">Item Size</th>
+                        <th class="" style="text-align: center">Item Color</th>
+                        <th class="" style="text-align: center">
+                          <div
+                            id="quantity-warning"
+                            style="display: none; color: red"
+                          ></div>
+                          Item Quntity
+                        </th>
+                        <th style="text-align: center">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for product in cart_product%}
+                      <tr class="">
+                        <td class="">
+                          <div class="product-info">
+                            <a
+                              href="{% url 'productdetails' unique_identifier=product.unique_identifier %}"
+                            >
+                              <img
+                                width="80"
+                                src="{{product.image1.url}}"
+                                alt=""
+                              />
+                              {{product.name}}
+                            </a>
+                          </div>
+                        </td>
+
+                        {% if product.is_sale %}
+                        <td class="" style="text-align: center">
+                          <strike>&#8377; {{product.price}}</strike> <br />
+                          &#8377; {{product.sale_price}}
+                        </td>
+                        {% else %}
+                        <td class="" style="text-align: center">
+                          &#8377; {{product.price}}
+                        </td>
+                        {% endif %}
+
+                        <td class="product-qty" style="text-align: center">
+                          {{ product.cart_size }}
+                        </td>
+
+                        <td class="product-qty" style="text-align: center">
+                          <span class="{{ product.cart_color }}"></span>
+                        </td>
+
+                        <td class="product-qty" style="text-align: center">
+                          <input
+                            style="text-align: center"
+                            id="select{{product.id}}"
+                            type="text"
+                            value="
+                            {{ product.cart_quantity }}
+                            "
+                            placeholder=""
+                            name="product-quantity"
+                          />
+                          <button
+                            style="
+                              width: 120px;
+                              margin: 5px 0;
+                              padding: 5px;
+                              background-color: rgb(255, 255, 255);
+                              color: rgb(0, 0, 0);
+                              border: 1px solid rgb(209, 205, 205);
+                              border-radius: 6px;
+                            "
+                            type="button"
+                            data-index="{{product.id}}"
+                            class="update-cart"
+                          >
+                            Update
+                          </button>
+                        </td>
+
+                        <td class="" style="text-align: center">
+                          <button
+                            style="
+                              width: 120px;
+                              margin: 5px 0;
+                              padding: 5px;
+                              background-color: rgb(255, 255, 255);
+                              color: rgb(0, 0, 0);
+                              border: 1px solid rgb(209, 205, 205);
+                              border-radius: 6px;
+                            "
+                            type="button"
+                            data-index="{{product.id}}"
+                            class="delete-product"
+                          >
+                            Remove
+                          </button>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="cart-summary">
+                    <span>Total</span>
+                    <span class="total-price">&#8377; {{totals}}</span>
+                  </div>
+                </div>
+
+                <a
+                  href="/checkout"
+                  class="btn btn-main pull-right"
+                  style="margin-top: 10px"
+                  >Checkout</a
+                >
+              </form>
+              {% else %}
+              <section class="empty-cart page-wrapper" >
+                <div class="container " style=" max-width: 80%;">
+                  <div class="row">
+                    <div class="col-md-12 col-md-offset-3 empty_cart" >
+                      <div class="block text-center" >
+                        <i class="tf-ion-ios-cart-outline"></i>
+                        <h2 class="text-center">
+                          Your cart is currently empty.
+                        </h2>
+                       
+                        <a href="/" class="btn btn-main mt-20"
+                          >Return to shop</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %} {% block extra_js %}
+
+<script>
+  // Update cart
+  $(document).on("click", ".update-cart", function (e) {
+    e.preventDefault();
+    var productId = $(this).data("index");
+    var productQty = $("#select" + productId).val(); // Use .val() to get input value
+    var warningMsg = $("#quantity-warning");
+
+    if (parseInt(productQty) > 0) {
+      $.ajax({
+        type: "POST",
+        url: '{% url "cart_update" %}',
+        data: {
+          product_id: productId,
+          product_qty: productQty,
+          csrfmiddlewaretoken: "{{ csrf_token }}",
+          action: "post",
+        },
+        success: function (json) {
+          // Handle success response here
+          location.reload(); // Reloading the page might not be the best UX
+        },
+        error: function (xhr, errmsg, err) {
+          console.log(xhr.status + ": " + xhr.responseText);
+        },
+      });
+    } else {
+      warningMsg.text("Minimum quantity needed is 1.").show();
+      setTimeout(function () {
+        warningMsg.hide();
+      }, 3000); // Hide warning after 3 seconds
+    }
+  });
+
+  // delete item fromcart
+  $(document).on("click", ".delete-product", function (e) {
+    e.preventDefault();
+    var productId = $(this).data("index");
+
+    $.ajax({
+      type: "POST",
+      url: '{% url "cart_delete" %}',
+      data: {
+        product_id: productId,
+        csrfmiddlewaretoken: "{{ csrf_token }}",
+        action: "post",
+      },
+      success: function (json) {
+        // Handle success response here
+        location.reload(); // Reloading the page might not be the best UX
+      },
+      error: function (xhr, errmsg, err) {
+        console.log(xhr.status + ": " + xhr.responseText);
+      },
+    });
+  });
+</script>
+
+{% endblock extra_js %}

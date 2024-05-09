@@ -1,0 +1,91 @@
+{% extends "base.html" %} 
+{% block body %}
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name">Dashboard</h1>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">my account</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+          <li><a class="active" href="/address">Address</a></li>
+          <li><a href="/profiledetails">Profile Details</a></li>
+        </ul>
+        <div class="dashboard-wrapper user-dashboard">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <!-- <th>Company</th> -->
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>City</th>
+                  <th>Country</th>
+                  <th class="col-md-2 col-sm-3">Phone</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <!-- <td>Nokia</td> -->
+                  <td>{{alldata.username}}</td>
+                  {% if alldata.address %}
+                  <td>{{alldata.address}}</td>
+                  {% else %}
+                  <td>Please update Your Address</td>
+                  {% endif %} {% if alldata.city %}
+                  <td>{{alldata.city}}</td>
+                  {% else %}
+                  <td>Please update Your City</td>
+                  {% endif %} {% if alldata.country %}
+                  <td>{{alldata.country}}</td>
+                  {% else %}
+                  <td>Please update Your Country</td>
+                  {% endif %} {% if alldata.phone %}
+                  <td>{{alldata.phone}}</td>
+                  {% else %}
+                  <td>Please update Your Phone Number</td>
+                  {% endif %}
+                  <td>
+                    <div class="btn-group" role="group">
+                      <!-- <button type="button" class="btn btn-default"><i class="tf-pencil2" aria-hidden="true"></i></button> -->
+                      <a
+                        href="/updateaddress"
+                        class="btn btn-small btn-solid-border"
+                        style="border: none; border-radius: 200px"
+                        ><i
+                          class="tf-pencil2"
+                          style="font-size: 15px"
+                          aria-hidden="true"
+                        ></i
+                      ></a>
+                      <!-- <a
+                    href="/updateprofile"
+                    class="btn btn-small btn-solid-border"
+                    >Update Profile</a
+                  > -->
+                      <!-- <button type="button" class="btn btn-default"><i class="tf-ion-close" aria-hidden="true"></i></button> -->
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}

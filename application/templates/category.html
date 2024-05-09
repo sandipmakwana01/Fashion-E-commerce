@@ -1,0 +1,181 @@
+{% extends "base.html" %} {% block title %} E Commerce {% endblock title %} 
+{% block body %}
+<section class="products section bg-gray">
+  <div class="container">
+    <!-- <div class="row">
+        <div class="title text-center" data-aos="fade-down" data-aos-anchor-placement="top-center">
+          <h2>{{mencategory_heading_name}}</h2>
+        </div>
+      </div> -->
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="widget">
+          <h4>Short By</h4>
+
+          <form method="post" action="{% url 'filter' %}" id="filterForm">
+            {% csrf_token %}
+
+            <div class="color-swatches">
+              {% for subcategory  in all_subcategory %}
+              <input
+                class=""
+                type="radio"
+                id="subcategory_{{ subcategory.id }}"
+                name="subcategory"
+                value="{{ subcategory.name }}"
+              />
+              <label class="" for="subcategory_{{ subcategory.id }}">{{ subcategory.name }}</label><br />
+              {% endfor %}
+            </div>
+            <div class="color-swatches">
+              <h4>Price:</h4>
+              {% for price_range in all_pricerange %}
+              <input
+                class=""
+                type="radio"
+                id="price_{{ price_range.id }}"
+                name="price_range"
+                value="{{ price_range.name }}"
+              />
+              <label class="" for="price_{{ price_range.id }}">{{ price_range.name }}</label><br />
+              {% endfor %}
+            </div>
+            <div class="color-swatches">
+              <h4>Colors:</h4>
+              {% for i in all_colors %}
+              <input
+                class="radio_button"
+                type="radio"
+                id="{{ i.name }}"
+                name="color"
+                value="{{ i.name }}"
+              />
+              <label
+                class="block_goodColor__radio  {{i.name}}"
+                for="{{ i.name }}"
+              ></label
+              ><br />
+              {% endfor %}
+            </div>
+            <div class="color-swatches">
+              <h4>Size:</h4>
+              {% for i in all_size %}
+              <input
+                class=""
+                type="radio"
+                id="size_{{ i.id }}"
+                name="size"
+                value="{{ i.name }}"
+              />
+              <label class="" for="size_{{ i.id }}">{{ i.name }}</label><br />
+              {% endfor %}
+            </div>
+            <button class='filterbtn' type="submit">submit</button>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="row">
+          {% if products %}
+          {% for i in products %} 
+          {% if i.is_sale %}
+          <div
+            class="col-md-3 product_hight"
+            data-aos="flip-right"
+            data-aos-anchor-placement="top-center"
+          >
+            <div class="product-item">
+              <div class="product-thumb">
+                <span class="bage">Sale</span>
+                <img
+                  class="img-responsive"
+                  src="{{i.image1.url}}"
+                  alt="product-img"
+                />
+                <!-- <div class="preview-meta">
+                  <ul>
+                    <li>
+                      <a href="#!"><i class="tf-ion-ios-heart"></i></a>
+                    </li>
+                    <li>
+                      <a href="#!"><i class="tf-ion-android-cart"></i></a>
+                    </li>
+                  </ul>
+                </div> -->
+              </div>
+              <div class="product-content">
+                <h4><a href="product-single.html">{{i.name}}</a></h4>
+                <p class="price">
+                  <strike>&#8377; {{i.price}}</strike> <br />
+                  &#8377; {{i.sale_price}}
+                </p>
+                <p>{{i.description}}</p>
+                <p>
+                  <a
+                    style="
+                      background-color: rgb(255, 255, 255);
+                      color: rgb(0, 0, 0);
+                      padding: 5px;
+                      border: 1px solid black;
+                    "
+                    href="{% url 'productdetails' unique_identifier=i.unique_identifier %}"
+                    >View Product</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div
+            class="col-md-3 product_hight"
+            data-aos="flip-right"
+            data-aos-anchor-placement="top-center"
+          >
+            <div class="product-item">
+              <div class="product-thumb">
+                <img
+                  class="img-responsive"
+                  src="{{i.image1.url}}"
+                  alt="product-img"
+                />
+              </div>
+              <div class="product-content">
+                <h4><a href="product-single.html">{{i.name}}</a></h4>
+                <p class="price">&#8377; {{i.price}}</p>
+                <p>{{i.description}}</p>
+                <p>
+                  <a
+                    style="
+                      background-color: rgb(255, 255, 255);
+                      color: rgb(0, 0, 0);
+                      padding: 5px;
+                      border: 1px solid black;
+                    "
+                    href="{% url 'productdetails' unique_identifier=i.unique_identifier %}"
+                    >View Product</a
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endif %} 
+          {% endfor %}
+          {% else %}
+          <center>
+              <h4>Product Not Found</h4>
+          </center>
+          {% endif %} 
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock body %}
+
+{% block extra_js %} 
+<script>
+ 
+</script>
+{% endblock extra_js %}
+

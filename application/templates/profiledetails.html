@@ -1,0 +1,68 @@
+{% extends "base.html" %} 
+{% block body %}
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name">Dashboard</h1>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">my account</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="user-dashboard page-wrapper">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="list-inline dashboard-menu text-center">
+          <li><a href="/address">Address</a></li>
+          <li><a class="active" href="/profiledetails">Profile Details</a></li>
+        </ul>
+        <div class="dashboard-wrapper dashboard-user-profile">
+          <div class="media">
+            <div class="pull-left text-center" href="#!">
+              {% if  alldata.image %}
+              <img
+                class="media-object user-img"
+                src="{{alldata.image.url}}"
+                alt="Image"
+              />
+              {% else %}
+              <img
+                class="media-object user-img"
+                src=""
+                alt="Add Profile Image"
+              />
+              {% endif %}
+
+              
+            </div>
+            <div class="media-body">
+              <ul class="user-profile-list">
+                <li><span>User Name:</span>{{alldata.username}}</li>
+                <li>
+                  <span>Email or Phone Number:</span>{{alldata.emailorphone}}
+                </li>
+                <li><span>Password:</span>{{alldata.password}}</li>
+                <li>
+                  <a
+                    href="/updateprofile"
+                    class="btn btn-small btn-solid-border"
+                    >Update Profile</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock body %}

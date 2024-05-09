@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% block extra_css %}
+
+{% endblock extra_css %}
+    
+{% block body %}
+
+
+<section class="single-product">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6">
+				<ol class="breadcrumb">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="shop.html">Shop</a></li>
+					<li class="active">Single Product</li>
+				</ol>
+			</div>
+		</div>
+		<div class="row mt-20">
+			<div class="col-md-5">
+				<div class="single-product-slider">
+					<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+						<div class='carousel-outer'>
+							<!-- me art lab slider -->
+							<div class='carousel-inner '>
+								<div class='item active' style="text-align: center;">
+									<img src='{{item.image1.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+								</div>
+								<div class='item' style="text-align: center;">
+									<img src='{{item.image2.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='i' data-zoom-image="images/shop/single-products/product-2.jpg" />
+								</div>
+								
+								<div class='item' style="text-align: center;">
+									<img src='{{item.image3.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='i' data-zoom-image="images/shop/single-products/product-3.jpg" />
+								</div>
+								<div class='item' style="text-align: center;">
+									<img src='{{item.image4.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='i' data-zoom-image="images/shop/single-products/product-4.jpg" />
+								</div>
+								<div class='item' style="text-align: center;">
+									<img src='{{item.image5.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='i' data-zoom-image="images/shop/single-products/product-5.jpg" />
+								</div>
+								<div class='item' style="text-align: center;">
+									<img src='{{item.image6.url}}' style="display: block; margin: 0 auto; width: 88%; height: 90vh;" alt='i' data-zoom-image="images/shop/single-products/product-6.jpg" />
+								</div>
+								
+							</div>
+							
+							<!-- sag sol -->
+							<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+								<i class="tf-ion-ios-arrow-left"></i>
+							</a>
+							<a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+								<i class="tf-ion-ios-arrow-right"></i>
+							</a>
+						</div>
+						
+						<!-- thumb -->
+						<ol class='carousel-indicators mCustomScrollbar meartlab'>
+							<li data-target='#carousel-custom' data-slide-to='0' class='active'>
+								<img src='{{item.image1.url}}' alt='dsf' />
+							</li>
+							<li data-target='#carousel-custom' data-slide-to='1'>
+								<img src='{{item.image2.url}}' alt='dsfs' />
+							</li>
+							<li data-target='#carousel-custom' data-slide-to='2'>
+								<img src='{{item.image3.url}}' alt='sadf' />
+							</li>
+							<li data-target='#carousel-custom' data-slide-to='3'>
+								<img src='{{item.image4.url}}' alt='asdf' />
+							</li>
+							<li data-target='#carousel-custom' data-slide-to='4'>
+								<img src='{{item.image5.url}}' alt='asd' />
+							</li>
+							<li data-target='#carousel-custom' data-slide-to='5'>
+								<img src='{{item.image6.url}}' alt='asdf' />
+							</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="single-product-details">
+					<h2>{{item.name}}</h2>
+
+					{% if item.is_sale %}
+						<p class="price"> <strike>&#8377; {{item.price}}</strike>  <br> &#8377; {{item.sale_price}}</p>
+					{% else %}
+						<p class="product-price">&#8377; {{item.price}}</p>
+					{% endif %}
+
+					
+					<p class="product-description mt-20">
+						{{item.description}}
+					</p>
+
+					<div class="color-swatches">
+						<span>Colors:</span>
+						{% for i in colors %}
+							<input class="radio_button" type="radio" id="{{ i }}" name="color" value="{{ i }}">
+							<label class="block_goodColor__radio  {{i}}" for="{{ i }}"></label><br>
+						{% endfor %}
+					</div>
+					
+
+					<div class="product-size">
+						<span>Size:</span>
+						<select id='product-size' class="form-control">
+							{% for i in size %}
+							<option>{{i}}</option>
+							{% endfor %}
+						</select>
+					</div>
+					
+					<div class="product-quantity">
+						<span>Quantity:</span>
+						<div class="product-quantity-slider">
+							<input id="qty-cart" type="text" value="1" placeholder="1" name="product-quantity">
+						</div>
+					</div>
+					<div id="quantity-warning" style="display: none; color: red;"></div>
+					<!-- <a href="cart.html" class="btn btn-main mt-20">Add To Cart</a> -->
+					<button type="button" value="{{item.id}}" class="btn btn-main mt-20" id="add-cart">Add To Cart</button>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+{% endblock body %}
+
+{% block extra_js %} 
+
+<script>
+    $(document).ready(function() {
+        // Click event handler for color radio buttons
+        $(document).on('click', '.radio_button', function() {
+            var selectedColor = $(this).val();  // Get the value of the selected color
+            console.log("Selected Color:", selectedColor);
+        });
+
+        // Click event handler for add to cart button
+        $(document).on('click', '#add-cart', function(e) {
+            e.preventDefault();
+            var quantity = $('#qty-cart').val();
+            var size = $('#product-size').val(); // Get the selected product size
+			var color = $('.radio_button:checked').val(); // Get the selected color
+            var warningMsg = $('#quantity-warning');
+
+            // Check if quantity, size, and color are not empty
+            if (quantity.trim() !== '' && size.trim() !== '' && $('.radio_button:checked').length > 0) {  
+                if (parseInt(quantity) > 0) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '{% url "cart_add" %}',
+                        data: {
+                            product_id: $(this).val(),
+                            product_qty: quantity,
+                            product_size: size, // Pass the selected product size to the server
+                            product_color: color, // Get the selected color
+                            csrfmiddlewaretoken: '{{ csrf_token }}',
+                            action: 'post'
+                        },
+                        success: function(json) {
+                            console.log(json);
+                            document.getElementById("cart_quantity").textContent = json.qty;
+                        },
+                        error: function(xhr, errmsg, err) {
+                            console.log(xhr.status + ": " + xhr.responseText);
+                        }
+                    });
+                } else {
+                    warningMsg.text('Minimum quantity needed is 1.').show();
+                    setTimeout(function() {
+                        warningMsg.hide();
+                    }, 3000); // Hide warning after 3 seconds
+                }
+            } else {
+                warningMsg.text('Please select color.').show();
+                setTimeout(function() {
+                    warningMsg.hide();
+                }, 3000); // Hide warning after 3 seconds
+            }
+        });
+    });
+</script>
+
+{% endblock extra_js %}

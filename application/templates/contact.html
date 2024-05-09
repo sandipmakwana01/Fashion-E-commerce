@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+ {% block body %}
+
+<section class="page-header">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="content">
+          <h1 class="page-name">Contact Us</h1>
+          <ol class="breadcrumb">
+            <li><a href="index.html">Home</a></li>
+            <li class="active">contact</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="page-wrapper">
+  <div class="contact-section">
+    <div class="container">
+      <div class="row">
+        <!-- Contact Details -->
+        <div class="contact-details col-md-6">
+          <div class="">
+            <div id="">
+              <!-- <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d113964.5958120875!2d82.05023482403865!3d26.79559262264751!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399a07ec9fc0ee79%3A0x970c0ef2cda713bf!2sE-Commerce!5e0!3m2!1sen!2sin!4v1713916922023!5m2!1sen!2sin"
+                width="550"
+                height="300"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe> -->
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d29535.237255153163!2d70.73952921083986!3d22.281601199999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3959cbe93a735e77%3A0x36a03cd53c7a2625!2sFashion%20Point!5e0!3m2!1sen!2sin!4v1714836302095!5m2!1sen!2sin" width="550" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+          <ul class="contact-short-info">
+            <li>
+              <i class="tf-ion-ios-home"></i>
+              <span>150 Feet Ring Rd, opp. Big Bazar Road, Bharatvan Society, Chandra Park-2, Vestan Zone, Rajkot, Gujarat 360004</span>
+            </li>
+            <li>
+              <i class="tf-ion-android-phone-portrait"></i>
+              <span>Phone: +91-75676-26592</span>
+            </li>
+           
+            <li>
+              <i class="tf-ion-android-mail"></i>
+              <span>Email: webdeveloper0843@gmail.com</span>
+            </li>
+          </ul>
+          <!-- Footer Social Links -->
+          <div class="social-icon">
+            <ul>
+              <li>
+                <a class="fb-icon" href="https://www.facebook.com/share/Hws8uG4MJV4kuLe9/?mibextid=qi2Omg"
+                  ><i class="tf-ion-social-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://x.com/sandip0843?t=AjZRTnC0Zh_5Zq8_pXyxug&s=09"
+                  ><i class="tf-ion-social-twitter"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/sandip_makwana01?igsh=bHY2cjZsdjJqODZt"
+                  ><i class="tf-ion-social-instagram"></i></a>
+              </li>
+              <li>
+                <a
+                  href="https://www.linkedin.com/in/sandip-makwana-a33864273?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app "
+                  target="_blank"
+                >
+                  <i class="bx bxl-linkedin-square"></i>
+                </a>
+              </li>
+              
+            </ul>
+          </div>
+          <!--/. End Footer Social Links -->
+        </div>
+        <!-- / End Contact Details -->
+
+        <!-- Contact Form -->
+        <div class="contact-form col-md-6">
+          <form id="contact-form" method="post" >
+            {% csrf_token %}
+			{% if messagee %}
+
+            <div
+              class="alert alert-warning alert-common alert-dismissible"
+              role="alert"
+            >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <i class="tf-ion-alert-circled"></i
+              ><span>Warning!</span> {{messagee}}
+            </div>
+
+            {% endif %} 
+			{% if messages %}
+
+            <div
+              class="alert alert-success alert-common alert-dismissible"
+              role="alert"
+            >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <i class="tf-ion-thumbsup"></i
+              ><span>Well done!</span> {{messages}}
+            </div>
+
+            {% endif %} 
+			{% if messagef %}
+
+            <div
+              class="alert alert-warning alert-common alert-dismissible"
+              role="alert"
+            >
+              <button
+                type="button"
+                class="close"
+                data-dismiss="alert"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <i class="tf-ion-alert-circled"></i
+              ><span>Warning!</span> {{messagesf}}
+            </div>
+
+            {% endif %} 
+
+            <div
+              class="form-group"
+              data-aos="fade-down"
+              data-aos-anchor-placement="bottom-bottom"
+            >
+              <input
+                type="text"
+                placeholder="Your Name"
+                class="form-control"
+                name="name"
+                id="name"
+              />
+            </div>
+
+            <div
+              class="form-group"
+              data-aos="fade-down"
+              data-aos-anchor-placement="bottom-bottom"
+            >
+              <input
+                type="email"
+                placeholder="Your Email"
+                class="form-control"
+                name="email"
+                id="email"
+              />
+            </div>
+
+            <div
+              class="form-group"
+              data-aos="fade-down"
+              data-aos-anchor-placement="bottom-bottom"
+            >
+              <input
+                type="text"
+                placeholder="Subject"
+                class="form-control"
+                name="subject"
+                id="subject"
+              />
+            </div>
+
+            <div
+              class="form-group"
+              data-aos="fade-down"
+              data-aos-anchor-placement="bottom-bottom"
+            >
+              <textarea
+                rows="6"
+                placeholder="Message"
+                class="form-control"
+                name="message"
+                id="message"
+              ></textarea>
+            </div>
+            
+            <div
+              id="cf-submit"
+              data-aos="fade-down"
+              data-aos-anchor-placement="bottom-bottom"
+            >
+              <input
+                type="submit"
+                id="contact-submit"
+                class="btn btn-transparent"
+                value="Submit"
+              />
+            </div>
+          </form>
+        </div>
+        <!-- ./End Contact Form -->
+      </div>
+      <!-- end row -->
+    </div>
+    <!-- end container -->
+  </div>
+</section>
+
+{% endblock body %}
